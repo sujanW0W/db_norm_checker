@@ -1,0 +1,10 @@
+{
+    "table_1": {
+        "id": "UUID",
+        "name": "VARCHAR(25)"
+    },
+    "table_2": {
+        "id": "UUID",
+        "address": "VARCHAR(25)"
+    }
+}
