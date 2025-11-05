@@ -3,22 +3,34 @@ import re
 import json
 import argparse
 
-parser = argparse.ArgumentParser(description="Read json")
-parser.add_argument("--file", type=str, help="Provide the path to json file")
 
-args = parser.parse_args()
+def main():
+    parser = argparse.ArgumentParser(description="Read json")
+    parser.add_argument("--file", type=str,
+                        help="Provide the path to json file")
 
-json_file_regex = r"^.+\.json$"
+    args = parser.parse_args()
 
-if not re.match(json_file_regex, args.file):
-    raise Exception("Only json file is supported")
+    extracted_data = extract_json(args.file)
+    print(extracted_data)
 
-try:
-    with open(args.file, 'r') as file:
-        data = json.load(file)
-    print(data)
 
-except FileNotFoundError:
-    print(f"Error: File {args.file} not found")
-except Exception as e:
-    print(f"Exception Raised: {e}")
+def extract_json(filename):
+    json_file_regex = r"^.+\.json$"
+
+    if not re.match(json_file_regex, filename):
+        raise Exception("Only json file is supported")
+
+    try:
+        with open(filename, 'r') as file:
+            data = json.load(file)
+        return data
+
+    except FileNotFoundError:
+        raise f"Error: File {filename} not found"
+    except Exception as e:
+        raise f"Exception Raised: {e}"
+
+
+if __name__ == "__main__":
+    main()
