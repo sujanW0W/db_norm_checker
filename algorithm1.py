@@ -176,14 +176,32 @@ def decomponse_to_3NF(relation, dependencies):
     Ff, Fp, Td = dependencies['Ff'], dependencies['Fp'], dependencies['Td']
 
     # Check if the relation is in 2NF through Fp
-    print(f"Ff: {Ff}")
-    print(f"Fp: {Fp}")
-    print(f"Td: {Td}")
+    # print(f"Ff: {Ff}")
+    # print(f"Fp: {Fp}")
+    # print(f"Td: {Td}")
     if len(Fp):
         print("The relation is not in 2NF")
         return
 
-    print("Relation is in 2NF. Move ahead ")
+    for table, fds in copy.deepcopy(Td).items():
+        for lhs, rhs_list in fds.items():
+            for table_2NF, col_dict in copy.deepcopy(relation).items():
+                if table in table_2NF and all([col in col_dict.keys() for col in [lhs, *rhs_list]]):
+                    temp = defaultdict(lambda: defaultdict)
+                    for col in [lhs, rhs_list[0]]:
+                        temp[col] = col_dict[col]
+
+                    relation[f"{table}_{lhs}_{rhs_list[0]}"] = temp
+                    del relation[table_2NF][rhs_list[0]]
+
+            Td[table] = dict([(k, v)
+                             for k, v in Td[table].items() if k != lhs])
+
+    Td = dict([(k, v) for k, v in Td.items() if len(v)])
+
+    print(dict([(k, v.keys()) for k, v in relation.items()]))
+
+    return relation
 
 
 def main():
@@ -207,7 +225,10 @@ def main():
     relation_2NF, dependencies_dict = decompose_to_2NF(
         schema, keys, dependencies_dict)
 
-    decomponse_to_3NF(relation_2NF, dependencies_dict)
+    relation_3NF = decomponse_to_3NF(relation_2NF, dependencies_dict)
+
+    with open(f"3NF_relation.json", 'w') as fp:
+        json.dump(relation_3NF, fp, indent=4)
 
 
 if __name__ == "__main__":
