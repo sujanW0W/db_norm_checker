@@ -2,7 +2,10 @@
 
 *.docx
 *.json
+progress.*
 
 project_board.md
 
 __pycache__
+
+/tests
