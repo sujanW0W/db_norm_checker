@@ -39,6 +39,8 @@ def get_full_partial_transitive_fd(dependencies, keys_dict):
     Fm = copy.deepcopy(dependencies)
     Ff = copy.deepcopy(Fm)
 
+    print(Fm)
+
     for table in Fm:
         # print(f"Table: {table}")
 
@@ -220,7 +222,7 @@ def main():
 
     dependencies_dict = get_full_partial_transitive_fd(dependencies, keys)
 
-    # print(dependencies_dict)
+    print(dependencies_dict)
 
     relation_2NF, dependencies_dict = decompose_to_2NF(
         schema, keys, dependencies_dict)
