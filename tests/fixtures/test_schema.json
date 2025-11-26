@@ -1,0 +1,109 @@
+{
+    "CUSTOMERS": {
+        "customerid": {
+            "type": "INTEGER",
+            "PK": true,
+            "Unique": null,
+            "Nullable": false,
+            "FKs": []
+        },
+        "name": {
+            "type": "VARCHAR",
+            "PK": false,
+            "Unique": null,
+            "Nullable": true,
+            "FKs": []
+        },
+        "region": {
+            "type": "VARCHAR",
+            "PK": false,
+            "Unique": null,
+            "Nullable": true,
+            "FKs": []
+        }
+    },
+    "ORDERS": {
+        "orderid": {
+            "type": "INTEGER",
+            "PK": true,
+            "Unique": null,
+            "Nullable": false,
+            "FKs": []
+        },
+        "customerid": {
+            "type": "INTEGER",
+            "PK": false,
+            "Unique": null,
+            "Nullable": true,
+            "FKs": [
+                {
+                    "name": "ORDERS_customerid_fkey",
+                    "references": "CUSTOMERS.customerid"
+                }
+            ]
+        },
+        "orderdate": {
+            "type": "DATE",
+            "PK": false,
+            "Unique": null,
+            "Nullable": true,
+            "FKs": []
+        }
+    },
+    "ORDERITEMS": {
+        "orderid": {
+            "type": "INTEGER",
+            "PK": true,
+            "Unique": null,
+            "Nullable": false,
+            "FKs": [
+                {
+                    "name": "ORDERITEMS_orderid_fkey",
+                    "references": "ORDERS.orderid"
+                }
+            ]
+        },
+        "productid": {
+            "type": "INTEGER",
+            "PK": true,
+            "Unique": null,
+            "Nullable": false,
+            "FKs": [
+                {
+                    "name": "ORDERITEMS_productid_fkey",
+                    "references": "PRODUCTS.productid"
+                }
+            ]
+        },
+        "quantity": {
+            "type": "INTEGER",
+            "PK": false,
+            "Unique": null,
+            "Nullable": true,
+            "FKs": []
+        },
+        "price": {
+            "type": "NUMERIC",
+            "PK": false,
+            "Unique": null,
+            "Nullable": true,
+            "FKs": []
+        }
+    },
+    "PRODUCTS": {
+        "productid": {
+            "type": "INTEGER",
+            "PK": true,
+            "Unique": null,
+            "Nullable": false,
+            "FKs": []
+        },
+        "price": {
+            "type": "NUMERIC",
+            "PK": false,
+            "Unique": null,
+            "Nullable": true,
+            "FKs": []
+        }
+    }
+}

@@ -1,7 +1,6 @@
 .env
 
 *.docx
-*.json
 progress.*
 
 project_board.md
