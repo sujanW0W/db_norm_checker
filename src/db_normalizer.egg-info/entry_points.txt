@@ -1,0 +1,2 @@
+[console_scripts]
+db-normalizer = db_normalizer.cli:main

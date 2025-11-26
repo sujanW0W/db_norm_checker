@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "db_normalizer"
+version = "0.0.1"
+description = "Automated DB Normalization Analyzer (1NF/2NF/3NF)"
+authors = [{name="Sujan Maharjan", email="sujan.maharjan.1@ndsu.edu"}]
+readme = "README.md"
+dependencies = ["SQLAlchemy>=2.0", "psycopg2"]
+[project.optional-dependencies]
+dev = ["pytest"]
+# optional: expose a console script
+[project.scripts]
+db-normalizer = "db_normalizer.cli:main"

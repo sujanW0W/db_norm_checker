@@ -1,5 +1,5 @@
 from sqlalchemy import MetaData
-from connection import get_db_connection
+from .connection import get_db_connection
 import json
 import argparse
 

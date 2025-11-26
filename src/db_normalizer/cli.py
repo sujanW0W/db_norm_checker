@@ -1,4 +1,4 @@
-"""normalizer.py
+"""cli.py
 
 Script for creating a pipleine to connect database, extract FDs, and normalize to normal forms.
 
@@ -12,9 +12,9 @@ import json
 import traceback
 from argparse import ArgumentParser
 
-from read_json import extract_json
-from extract_schema import get_schema
-from algorithm import extract_keys, get_full_partial_transitive_fd, decompose_to_2NF, decomponse_to_3NF
+from .read_json import extract_json
+from .extract_schema import get_schema
+from .algorithm import extract_keys, get_full_partial_transitive_fd, decompose_to_2NF, decomponse_to_3NF
 
 
 def pipeline(schema: dict, dependencies: dict, normalization_level: str, out_prefix: str = "final"):
@@ -30,7 +30,7 @@ def pipeline(schema: dict, dependencies: dict, normalization_level: str, out_pre
     else:
         relation = relation_2NF
 
-    out_file = f"{out_prefix}.json"
+    out_file = f"{out_prefix or normalization_level}.json"
     with open(out_file, 'w') as fp:
         json.dump(relation, fp, indent=4)
 
@@ -40,9 +40,9 @@ def pipeline(schema: dict, dependencies: dict, normalization_level: str, out_pre
     return relation
 
 
-def main():
-    parser = ArgumentParser(
-        description="Automated Normalization Checker CLI: Decompose to 2NF/3NF")
+def build_parser():
+    parser = ArgumentParser(prog="db_normalizer",
+                            description="Automated Normalization Checker CLI: Decompose to 2NF/3NF")
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument("--database", "-db", type=str, help="Database name")
     group.add_argument("--schema", "-s", type=str, help="File path to schema")
@@ -56,6 +56,12 @@ def main():
 
     args = parser.parse_args()
 
+    return args
+
+
+def main():
+    args = build_parser()
+
     try:
         if args.database:
             print(f"Establishing connection to database: {args.database}")
@@ -67,8 +73,8 @@ def main():
 
         dependencies = extract_json(args.dependencies)
 
-        relation = pipeline(schema=schema, dependencies=dependencies,
-                            normalization_level=args.level, out_prefix=args.out_prefix)
+        pipeline(schema=schema, dependencies=dependencies,
+                 normalization_level=args.level, out_prefix=args.out_prefix)
 
         print("Done!")
 

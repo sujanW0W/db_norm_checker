@@ -1,5 +1,5 @@
-from extract_schema import get_schema
-from read_json import extract_json
+from .extract_schema import get_schema
+from .read_json import extract_json
 import argparse
 
 

@@ -2,7 +2,7 @@
     Algorithm to determine partial and full dependencies
 """
 
-from read_json import extract_json
+from .read_json import extract_json
 import copy
 import json
 from collections import defaultdict
