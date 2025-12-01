@@ -26,6 +26,10 @@ def extract_keys(schema):
 
 
 def get_full_partial_transitive_fd(dependencies, keys_dict):
+    # To generalize, add space after the comma for composite keys
+    dependencies = dict([(table, dict([(lhs.replace(', ', ',').replace(',', ', '), rhs_list)
+                        for lhs, rhs_list in fds.items()])) for table, fds in dependencies.items()])
+
     print("\n--- FDs ---")
     # Consider Minimal cover set of F (Need another algorithm to get Minimal cover)
     Fm = defaultdict(lambda: defaultdict(list))
