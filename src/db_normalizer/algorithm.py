@@ -67,12 +67,17 @@ def get_full_partial_transitive_fd(dependencies, keys_dict):
             for rhs in rhs_list:
                 # print(f"{lhs} -> {rhs}")
 
-                if lhs not in keys_dict[table]["keys"] and any([lhs in Fp_rhs_list for Fp_rhs_list in Fp[table].values()]):
-                    # print("Transitive FD")
-                    Td[table][lhs].append(rhs)
-                    Fp[table][lhs].append(rhs)
-                    Ff[table][keys_dict[table]["candidate_key"]].remove(rhs)
-                    del Ff[table][lhs]
+                if len(Fp[table]):
+                    if lhs not in keys_dict[table]["keys"] and any([lhs in Fp_rhs_list for Fp_rhs_list in Fp[table].values()]):
+                        # print("Transitive FD")
+                        Td[table][lhs].append(rhs)
+                        Fp[table][lhs].append(rhs)
+                        Ff[table][keys_dict[table]
+                                  ["candidate_key"]].remove(rhs)
+                        del Ff[table][lhs]
+                else:
+                    if lhs not in keys_dict[table]["keys"] and any([lhs in Ff_rhs_list for Ff_rhs_list in Ff[table].values()]):
+                        Td[table][lhs].append(rhs)
 
     dependencies_dict = dict([('Ff', Ff), ('Fp', Fp), ('Td', Td)])
     return dependencies_dict
@@ -165,6 +170,17 @@ def decompose_to_2NF(relation, keys_dict, dependencies):
 
     Ff = dict([(k, v) for k, v in Ff.items() if len(v.keys()) > 0])
 
+    # Transitive dependencies without partial dependencies
+    for table, fds in Td.items():
+        for lhs, rhs_list in fds.items():
+            for table_name, col_dict in relation_2NF.items():
+                if table != table_name.split('_')[0]:
+                    continue
+                if lhs in col_dict.keys():
+                    for rhs in rhs_list:
+                        if rhs not in relation_2NF[table_name]:
+                            relation_2NF[table_name][rhs] = relation[table][rhs]
+
     print(dict([(table, table_dict.keys())
           for table, table_dict in relation_2NF.items()]))
 
@@ -189,9 +205,10 @@ def decomponse_to_3NF(relation, dependencies):
         print("The relation is not in 2NF")
         return
 
+    copied_relation = copy.deepcopy(relation)
     for table, fds in copy.deepcopy(Td).items():
         for lhs, rhs_list in fds.items():
-            for table_2NF, col_dict in copy.deepcopy(relation).items():
+            for table_2NF, col_dict in copied_relation.items():
                 if table in table_2NF and all([col in col_dict.keys() for col in [lhs, *rhs_list]]):
                     temp = defaultdict(lambda: defaultdict)
                     for col in [lhs, rhs_list[0]]:

@@ -1,18 +1,26 @@
 {
-    "CUSTOMERS": {
-        "customerid": ["name", "region"]
+    "R1": {
+        "A,B": ["C"],
+        "A": ["C"]
     },
 
-    "PRODUCTS": {
-        "productid": ["price"]
+    "R2": {
+        "A,B": ["C", "D"]
     },
 
-    "ORDERS": {
-        "orderid": ["customerid", "orderdate"]
+    "R3": {
+        "A,B": ["C", "D"],
+        "A": ["C"],
+        "B": ["D"]
     },
 
-    "ORDERITEMS": {
-        "orderid, productid": ["quantity", "price"],
-        "productid": ["price"]
+    "R4": {
+        "A": ["B", "C"]
+    },
+
+    "R5": {
+        "A, B": ["C", "D"],
+        "A": ["C"],
+        "C": ["D"]
     }
 }

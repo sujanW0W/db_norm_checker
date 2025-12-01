@@ -1,20 +1,20 @@
 {
-    "R1": {
-        "A": {
+    "CUSTOMERS": {
+        "customerid": {
             "type": "INTEGER",
             "PK": true,
             "Unique": null,
             "Nullable": false,
             "FKs": []
         },
-        "B": {
-            "type": "INTEGER",
-            "PK": true,
+        "name": {
+            "type": "VARCHAR",
+            "PK": false,
             "Unique": null,
-            "Nullable": false,
+            "Nullable": true,
             "FKs": []
         },
-        "C": {
+        "region": {
             "type": "VARCHAR",
             "PK": false,
             "Unique": null,
@@ -22,117 +22,84 @@
             "FKs": []
         }
     },
-
-    "R2": {
-        "A": {
+    "ORDERS": {
+        "orderid": {
             "type": "INTEGER",
             "PK": true,
             "Unique": null,
             "Nullable": false,
             "FKs": []
         },
-        "B": {
+        "customerid": {
             "type": "INTEGER",
-            "PK": true,
-            "Unique": null,
-            "Nullable": false,
-            "FKs": []
-        },
-        "C": {
-            "type": "VARCHAR",
             "PK": false,
             "Unique": null,
             "Nullable": true,
-            "FKs": []
+            "FKs": [
+                {
+                    "name": "ORDERS_customerid_fkey",
+                    "references": "CUSTOMERS.customerid"
+                }
+            ]
         },
-        "D": {
-            "type": "VARCHAR",
-            "PK": false,
-            "Unique": null,
-            "Nullable": true,
-            "FKs": []
-        }
-    },
-
-    "R3": {
-        "A": {
-            "type": "INTEGER",
-            "PK": true,
-            "Unique": null,
-            "Nullable": false,
-            "FKs": []
-        },
-        "B": {
-            "type": "INTEGER",
-            "PK": true,
-            "Unique": null,
-            "Nullable": false,
-            "FKs": []
-        },
-        "C": {
-            "type": "VARCHAR",
-            "PK": false,
-            "Unique": null,
-            "Nullable": true,
-            "FKs": []
-        },
-        "D": {
-            "type": "VARCHAR",
+        "orderdate": {
+            "type": "DATE",
             "PK": false,
             "Unique": null,
             "Nullable": true,
             "FKs": []
         }
     },
-
-    "R4": {
-        "A": {
+    "ORDERITEMS": {
+        "orderid": {
             "type": "INTEGER",
             "PK": true,
             "Unique": null,
             "Nullable": false,
-            "FKs": []
+            "FKs": [
+                {
+                    "name": "ORDERITEMS_orderid_fkey",
+                    "references": "ORDERS.orderid"
+                }
+            ]
         },
-        "B": {
-            "type": "VARCHAR",
+        "productid": {
+            "type": "INTEGER",
+            "PK": true,
+            "Unique": null,
+            "Nullable": false,
+            "FKs": [
+                {
+                    "name": "ORDERITEMS_productid_fkey",
+                    "references": "PRODUCTS.productid"
+                }
+            ]
+        },
+        "quantity": {
+            "type": "INTEGER",
             "PK": false,
             "Unique": null,
             "Nullable": true,
             "FKs": []
         },
-        "C": {
-            "type": "VARCHAR",
+        "price": {
+            "type": "NUMERIC",
             "PK": false,
             "Unique": null,
             "Nullable": true,
             "FKs": []
         }
     },
-
-    "R5": {
-        "A": {
+    "PRODUCTS": {
+        "productid": {
             "type": "INTEGER",
             "PK": true,
             "Unique": null,
             "Nullable": false,
             "FKs": []
         },
-        "B": {
-            "type": "INTEGER",
-            "PK": true,
-            "Unique": null,
-            "Nullable": false,
-            "FKs": []
-        },
-        "C": {
-            "type": "VARCHAR",
-            "PK": false,
-            "Unique": null,
-            "Nullable": true,
-            "FKs": []
-        },
-        "D": {
-            "type": "VARCHAR",
+        "price": {
+            "type": "NUMERIC",
             "PK": false,
             "Unique": null,
             "Nullable": true,

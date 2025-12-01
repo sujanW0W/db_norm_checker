@@ -1,0 +1,18 @@
+{
+    "CUSTOMERS": {
+        "customerid": ["name", "region"]
+    },
+
+    "PRODUCTS": {
+        "productid": ["price"]
+    },
+
+    "ORDERS": {
+        "orderid": ["customerid", "orderdate"]
+    },
+
+    "ORDERITEMS": {
+        "orderid, productid": ["quantity", "price"],
+        "productid": ["price"]
+    }
+}
