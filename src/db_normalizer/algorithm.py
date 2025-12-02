@@ -210,11 +210,12 @@ def decomponse_to_3NF(relation, dependencies):
         for lhs, rhs_list in fds.items():
             for table_2NF, col_dict in copied_relation.items():
                 if table in table_2NF and all([col in col_dict.keys() for col in [lhs, *rhs_list]]):
-                    temp = defaultdict(lambda: defaultdict)
+                    temp = defaultdict(dict)
                     for col in [lhs, rhs_list[0]]:
-                        temp[col] = col_dict[col]
+                        temp[col] = copy.deepcopy(col_dict[col])
 
                     relation[f"{table}_{lhs}_{rhs_list[0]}"] = temp
+                    relation[f"{table}_{lhs}_{rhs_list[0]}"][lhs]['PK'] = True
                     del relation[table_2NF][rhs_list[0]]
 
             Td[table] = dict([(k, v)

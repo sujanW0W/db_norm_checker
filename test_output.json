@@ -1,0 +1,50 @@
+{
+    "R_A": {
+        "A": {
+            "type": "INTEGER",
+            "PK": true,
+            "Unique": null,
+            "Nullable": false,
+            "FKs": []
+        },
+        "B": {
+            "type": "INTEGER",
+            "PK": false,
+            "Unique": null,
+            "Nullable": false,
+            "FKs": []
+        }
+    },
+    "R_B_C": {
+        "B": {
+            "type": "INTEGER",
+            "PK": true,
+            "Unique": null,
+            "Nullable": false,
+            "FKs": []
+        },
+        "C": {
+            "type": "VARCHAR",
+            "PK": false,
+            "Unique": null,
+            "Nullable": true,
+            "FKs": []
+        }
+    },
+    "R_C_D": {
+        "C": {
+            "type": "VARCHAR",
+            "PK": true,
+            "Unique": null,
+            "Nullable": true,
+            "FKs": []
+        },
+        "D": {
+            "type": "VARCHAR",
+            "PK": false,
+            "Unique": null,
+            "Nullable": true,
+            "FKs": []
+        }
+    }
+}
