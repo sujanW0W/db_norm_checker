@@ -17,7 +17,7 @@ from .extract_schema import get_schema
 from .algorithm import extract_keys, get_full_partial_transitive_fd, decompose_to_2NF, decomponse_to_3NF
 
 
-def pipeline(schema: dict, dependencies: dict, normalization_level: str, out_prefix: str = "final"):
+def pipeline(schema: dict, dependencies: dict, normalization_level: str, out_prefix: str):
     keys = extract_keys(schema)
 
     dependencies_dict = get_full_partial_transitive_fd(dependencies, keys)
@@ -30,7 +30,7 @@ def pipeline(schema: dict, dependencies: dict, normalization_level: str, out_pre
     else:
         relation = relation_2NF
 
-    out_file = f"{out_prefix or normalization_level}.json"
+    out_file = f"{out_prefix}.json"
     with open(out_file, 'w') as fp:
         json.dump(relation, fp, indent=4)
 
@@ -52,7 +52,7 @@ def build_parser():
     parser.add_argument(
         "--level", "-l", choices=["2NF", "3NF"], help="Normalization level - 2NF or 3NF")
     parser.add_argument("--out_prefix", "-f", type=str,
-                        help="Prefix for output file")
+                        help="Prefix for output file", default="decomposed")
 
     args = parser.parse_args()
 

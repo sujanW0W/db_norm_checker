@@ -10,7 +10,7 @@ A Python tool to detect and report normalization violations up to 3NF in a live 
 -   Detects 1NF/2NF/3NF violations and performs decomposition (2NF/3NF).
 -   CLI for running analysis and exporting results (JSON/text).
 
-## Quick start (Windows)
+## Quick start
 
 1. Create and activate a virtual environment:
 
@@ -32,9 +32,21 @@ A Python tool to detect and report normalization violations up to 3NF in a live 
     python -m db_normalizer --schema-file path\to\schema.json --dependencies path\to\fds.json --level 2NF
     ```
 
-4. Or extract schema from DB (DSN/connection string):
+4. Or extract schema from DB (requires a .env file):
+
+    Create a `.env` file in the project root with the following variables:
+
     ```
-    python -m db_normalizer --dsn "postgresql://user:pass@host:5432/dbname" --dependencies path\to\fds.json --level 3NF
+    DB_HOST=localhost
+    DB_PORT=5432
+    DB_USER=myuser
+    DB_PASSWORD=supersecret
+    ```
+
+    Then, run analyzer with database name
+
+    ```
+    python -m db_normalizer --database "dbname" --dependencies path\to\fds.json --level 3NF
     ```
 
 ## Project layout
@@ -69,12 +81,12 @@ Options:
 -   --schema Path to schema JSON
 -   --dependencies Path to FD JSON (required)
 -   --level 2NF or 3NF (default: 2NF)
--   --out_prefix Output filename (default: {level}.json)
+-   --out_prefix Output filename (default: decomposed.json)
 
 Example:
 
 ```
-python -m db_normalizer --schema-file schema1.json --dependencies fds1.json --level 3NF --out result.json
+python -m db_normalizer --schema-file schema1.json --dependencies fds1.json --level 3NF --out_prefix result
 ```
 
 ## Notes
