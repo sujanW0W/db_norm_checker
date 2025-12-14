@@ -1,8 +1,12 @@
 .env
 
 *.docx
+*.pdf
+*.pptx
 progress.*
 
 project_board.md
 
 __pycache__
+
+*.egg-info
