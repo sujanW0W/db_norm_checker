@@ -2,6 +2,8 @@
 
 A Python tool to detect and report normalization violations up to 3NF in a live PostgreSQL database or from schema/FD JSON fixtures. Combines schema extraction, user-provided functional dependencies (FDs), and algorithmic analysis to produce 2NF/3NF decompositions.
 
+![DB Normalizer](/assets/DB_Normalizer.png)
+
 ## Motivation
 
 -   Database normalization is typically taught as a theoretical exercise, while real-world schemas are live, evolving, and often lack explicitly documented functional dependencies.
